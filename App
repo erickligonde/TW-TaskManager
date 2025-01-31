@@ -1,0 +1,36 @@
+import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
+import './App.css'
+import Header from './header'
+import Manager from './Manager'
+
+export default function App() {
+
+const [list, setList] = useState([])
+const [task, setTask] = useState('')
+const [pending, setPending] = useState(false)
+
+const [pendingNum, setPendingNum] = useState(0)
+const [completeNum, setCompleteNum] = useState(0)
+
+
+return(
+  <>
+    <Header/>
+    <Manager
+              list={list}
+              task={task}
+              pending={pending}
+              pendingNum={pendingNum}
+              completeNum={completeNum}
+              setTask={setTask}
+              setList={setList}
+              setPendingNum={setPendingNum}
+              setCompleteNum={setCompleteNum}
+            />
+        </>
+  
+)
+}
+

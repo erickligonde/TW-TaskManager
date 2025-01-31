@@ -1,0 +1,79 @@
+export default function Manager({
+    list,
+    task,
+    pending,
+    pendingNum,
+    completeNum,
+    setTask,
+    setPendingNum,
+    setCompleteNum,
+    setList,
+
+}){
+
+    const handleTask = (event) => {
+        setTask(event.target.value)
+    }
+
+    const handleAdd = () => {
+        const newTask = {name: task, pending: true}
+        setList((prevList) => [...prevList, newTask])
+        setPendingNum(pendingNum + 1)
+        setTask("")
+        console.log(list)
+    }
+
+    const handleComplete = (index) => {
+        setList((prevList) => prevList.filter((_, i) => i !== index));
+        setPendingNum(pendingNum - 1)
+        setCompleteNum(completeNum + 1)
+    }
+
+    const handleDelete = (index) => {
+        setList((prevList) => prevList.filter((_, i) => i !== index));
+        setPendingNum(pendingNum - 1)
+    }
+
+    return(
+        <>
+        <div className=" flex justify-center ">
+            <div className="bg-white min-h-40 w-140 mt-40 rounded-lg shadow-xl flex pl-9 flex-col">
+                <p className="text-center pt-3 pb-3">{pendingNum} Pending, {completeNum} Completed</p>
+                <input className=" h-10 w-95/100 rounded-3xl bg-gray-200 p-4"
+                placeholder="Add New Task"
+                value={task}
+                onChange={handleTask}
+                />
+                <div className="flex justify-center mt-4">
+                    <button 
+                    className="h-7 w-15 bg-gray-300 rounded-lg mb-5 cursor-pointer hover:bg-teal-700 hover:text-white transition-colors duration-300 ease-in-out"
+                    onClick={handleAdd}
+                    >Click</button>
+                </div>
+                <div className="mb-5">
+                {list.map((item, index) => (
+                    <ul className="mb-10px">
+                        <div className="flex justify-between mb-2 mr-9 rounded-md 5px hover:bg-gray-100 transition-colors duration-300 ease-in-out">
+                            <li key={index}
+                            className="ml-4"
+                            >{item.name}
+                            </li>
+                            <div className="mr-4 flex"> 
+                                <button
+                                className="cursor-pointer hover:bg-teal-700 w-8 hover:text-white transition-colors duration-300 ease-in-out"
+                                onClick={()=> handleComplete(index)}
+                                >✓</button>
+                                <button 
+                                className="font-extralight cursor-pointer hover:bg-red-500 w-8 hover:text-white transition-colors duration-300 ease-in-out"
+                                onClick={()=> handleDelete(index)}
+                                >X</button>
+                            </div>
+                        </div>  
+                    </ul>
+                ))}
+                </div>
+            </div>
+        </div>
+        </>
+    )
+}
